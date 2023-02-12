@@ -1,4 +1,4 @@
-PATH="hours"
+PATH=""
 [ ! -d  ~/$PATH ] && mkdir ~/$PATH
 [ ! -d  ~/$PATH/$(date +"%y") ] && mkdir ~/$PATH/$(date +"%y")
 echo "o"$(date +"%d")"#"$(date +"%T") >> ~/$PATH/$(date +"%y"/"%m").txt
