@@ -31,4 +31,4 @@ ex: ./foo 02/23 1 | ./foo 02/23 2 | ./foo 02/23 3
 
 Example output:
 
-![alt text](https://imgur.com/a/11jOBKb)
+![alt text](https://i.imgur.com/p1Jjdnm.png)
