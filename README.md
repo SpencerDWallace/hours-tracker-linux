@@ -12,10 +12,10 @@ bash and c++ tool to track hours worked and output the desired month/year and pa
 
 How to use:    
 run clockin to add a clockin time to the data file
-ex: (if currently directory of the scripts) $ . clockin
+ex: (if currently in directory of the scripts) $ . clockin
 
 run clockout to add a clockout time to the data file
-ex: (if currently directory of the scripts) $ . clockout
+ex: (if currently in directory of the scripts) $ . clockout
 
 compile doit.cpp
 ex: g++ doit.cpp -o foo
