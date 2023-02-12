@@ -11,19 +11,19 @@ bash and c++ tool to track hours worked and output the desired month/year and pa
 ######################################################################
 
 How to use:    
-run clockin to add a clockin time to the data file
+run clockin to add a clockin time to the data file    
 ex: (if currently in directory of the scripts) $ . clockin
 
-run clockout to add a clockout time to the data file
+run clockout to add a clockout time to the data file    
 ex: (if currently in directory of the scripts) $ . clockout
 
-compile doit.cpp
+compile doit.cpp    
 ex: g++ doit.cpp -o foo
 
-run doit.cpp
+run program    
 ex: ./foo
 
-Some additional options:
+Some additional options:    
 When running program, a few arguments can be passed to skip user input
 - month and year can be passed as MM/YY
 - pay cycle can be passed as 1 (1-15) 2 (16-end) or 3 (entire month)
