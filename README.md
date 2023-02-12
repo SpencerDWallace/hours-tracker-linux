@@ -10,7 +10,7 @@ bash and c++ tool to track hours worked and output the desired month/year and pa
 #### ex: store data in ~/some/path/hours - PATH should be "./hours"
 ######################################################################
 
-How to use:
+How to use:    
 run clockin to add a clockin time to the data file
 ex: (if currently directory of the scripts) $ . clockin
 
