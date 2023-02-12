@@ -30,19 +30,5 @@ When running program, a few arguments can be passed to skip user input
 ex: ./foo 02/23 1 | ./foo 02/23 2 | ./foo 02/23 3
 
 Example output:
-./foo 02/23 1
-Year is: 23 | Month is: 02
 
-day       |clock-in      |clock-out
---------------------------------------------
-2          05:05          13:05
-11         15:19          21:26
-11         23:43          23:45
-12         23:45          01:17
-12         05:05          13:05
-
-day       |hours
---------------------------
-2          8:00
-11         6:09
-12         9:32
+![alt text](https://github.com/SpencerDWallace/hours-tracker-linux/blob/main/example-output.png)
