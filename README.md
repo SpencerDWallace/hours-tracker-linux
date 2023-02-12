@@ -31,4 +31,4 @@ ex: ./foo 02/23 1 | ./foo 02/23 2 | ./foo 02/23 3
 
 Example output:
 
-![alt text](https://github.com/SpencerDWallace/hours-tracker-linux/blob/main/example-output.png)
+![alt text](https://imgur.com/a/11jOBKb)
