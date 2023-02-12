@@ -11,7 +11,8 @@
 
 using namespace std;
 
-const string PATH{"./timesheet"}; //relative to directory of this program
+//path to directory containing all hours data, relative to directory of this program
+const string PATH{"./"}; 
 bool PRINTALL{false};
 
 void parseFile(const string &y, const string &m, const bool &pp);
