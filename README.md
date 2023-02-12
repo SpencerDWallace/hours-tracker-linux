@@ -1,14 +1,14 @@
 # hours-tracker-linux
 bash and c++ tool to track hours worked and output the desired month/year and pay period
 
-################            PLEASE READ BELOW COMMENTS FOR SETUP            ################
+################ PLEASE READ BELOW COMMENTS FOR SETUP ################
 #### will most likely need to update PATH in the clockin and clockout scripts
-#### to be give the location of doit.cpp - assumes home directory is being used by default
+#### to give the location of doit.cpp - uses home directory by default
 #### ex: if doit.cpp is in path ~/some/path/ - PATH should be "some/path"
 #### PATH variable in doit.cpp may also need tinkering if you would like
 #### to store the data files in a nested folder
-#### ex: store data in ~some/path/hours - PATH should be "./hours"
-############################################################################################
+#### ex: store data in ~/some/path/hours - PATH should be "./hours"
+######################################################################
 
 How to use:
 run clockin to add a clockin time to the data file
