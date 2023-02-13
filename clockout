@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 LOCATION=""
 [ ! -d  ~/$LOCATION ] && mkdir ~/$LOCATION
 [ ! -d  ~/$LOCATION/$(date +"%y") ] && mkdir ~/$LOCATION/$(date +"%y")
