@@ -2,9 +2,9 @@
 bash and c++ tool to track hours worked and output the desired month/year and pay period
 
 ################ PLEASE READ BELOW COMMENTS FOR SETUP ################
-#### will most likely need to update PATH in the clockin and clockout scripts
+#### will most likely need to update LOCATION in the clockin and clockout scripts
 #### to give the location of doit.cpp - uses home directory by default
-#### ex: if doit.cpp is in path ~/some/path/ - PATH should be "some/path"
+#### ex: if doit.cpp is under path ~/some/path/ - LOCATION should be "some/path"
 #### PATH variable in doit.cpp may also need tinkering if you would like
 #### to store the data files in a nested folder
 #### ex: store data in ~/some/path/hours - PATH should be "./hours"

@@ -1,5 +1,5 @@
-PATH=""
-[ ! -d  ~/$PATH ] && mkdir ~/$PATH
-[ ! -d  ~/$PATH/$(date +"%y") ] && mkdir ~/$PATH/$(date +"%y")
-echo "i"$(date +"%d")"#"$(date +"%T") >> ~/$PATH/$(date +"%y"/"%m").txt
+LOCATION=""
+[ ! -d  ~/$LOCATION ] && mkdir ~/$LOCATION
+[ ! -d  ~/$LOCATION/$(date +"%y") ] && mkdir ~/$LOCATION/$(date +"%y")
+echo "i"$(date +"%d")"#"$(date +"%T") >> ~/$LOCATION/$(date +"%y"/"%m").txt
 echo "clocked in at: "$(date)
