@@ -1,7 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-LOCATION=""
-[ ! -d  ~/$LOCATION ] && mkdir ~/$LOCATION
-[ ! -d  ~/$LOCATION/$(date +"%y") ] && mkdir ~/$LOCATION/$(date +"%y")
-echo "i"$(date +"%d")"#"$(date +"%T") >> ~/$LOCATION/$(date +"%y"/"%m").txt
-echo "clocked in at: "$(date)
+sdir=$(cd $(dirname $BASH_SOURCE[0]) && pwd)
+. ${sdir}/common.sh
+add_timestamp "i"
