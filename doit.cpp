@@ -7,44 +7,52 @@
 #include <iostream>
 #include <map>
 
-#define MID 15
-
 using namespace std;
 
+//day of the month to use for middle of the pay period
+#ifndef MID
+#define MID 15
+#endif
+
 //path to directory containing all hours data, relative to directory of this program
-const string PATH{"./"}; 
+#ifndef HT_OUT_DIR
+#define HT_OUT_DIR "./hours"
+#endif
+
 bool PRINTALL{false};
 
-void parseFile(const string &y, const string &m, const bool &pp);
-bool checkValidMonthAndYear(const string &input, string &month, string &year);
-void readMonthAndYear(string &m, string &y);
-void readPayPeriod(int &p);
+void parseFile(const string& y, const string& m, const bool& pp);
+bool checkValidMonthAndYear(const string& input, string& month, string& year);
+void readMonthAndYear(string& m, string& y);
+void readPayPeriod(int& p);
 
-int main(int argc, char** argv) {
-
+int main(int argc, char** argv)
+{
   string year;
   string month;
-  int payPeriod{-1};
-  bool monthAndYearFromArgs{false};
+  int    payPeriod{-1};
+  bool   monthAndYearFromArgs{false};
   //read any command args
-  if (argc > 1) {
+  if (argc > 1)
+  {
     //check if -a is passed as an arg
-    if((string(argv[1]) == "-a" || string(argv[1]) == "3")
-      || (argc > 2 && (string(argv[2]) == "-a" || string(argv[2]) == "3") )){
-        PRINTALL = true;
+    if ((string(argv[1]) == "-a" || string(argv[1]) == "3") || (argc > 2 && (string(argv[2]) == "-a" || string(argv[2]) == "3")))
+    {
+      PRINTALL = true;
     }
     //check if pay cycle is passed as an arg
-    else if( (string(argv[1]) == "1" || string(argv[1]) == "2") 
-      || (argc > 2 && ( string(argv[2]) == "1" || string(argv[2]) == "2") ))
-      payPeriod = (string(argv[1]) == "1" || string(argv[2]) == "2") ? stoi(argv[1])-1 : stoi(argv[2])-1;
+    else if ((string(argv[1]) == "1" || string(argv[1]) == "2") || (argc > 2 && (string(argv[2]) == "1" || string(argv[2]) == "2")))
+      payPeriod = (string(argv[1]) == "1" || string(argv[2]) == "2") ? stoi(argv[1]) - 1 : stoi(argv[2]) - 1;
     //check if month and year are passed as an arg
-    if(string(argv[1]).length() == 5 || (argc > 2 && string(argv[2]).length() == 5)){
-      monthAndYearFromArgs = (string(argv[1]).length() == 5) ? 
-        checkValidMonthAndYear(argv[1], month, year) : checkValidMonthAndYear(argv[2], month, year);
+    if (string(argv[1]).length() == 5 || (argc > 2 && string(argv[2]).length() == 5))
+    {
+      monthAndYearFromArgs = (string(argv[1]).length() == 5) ?
+                               checkValidMonthAndYear(argv[1], month, year) :
+                               checkValidMonthAndYear(argv[2], month, year);
     }
   }
-  
-  if(!monthAndYearFromArgs)
+
+  if (!monthAndYearFromArgs)
     readMonthAndYear(month, year);
   if (!PRINTALL && payPeriod == -1) // only get input from user if not printing all
     readPayPeriod(payPeriod);
@@ -58,11 +66,12 @@ Calculates the minutes between two times given as strings
 @param earlier: preferably the earlier time of the two input strings
 @param later: preferably the later time of the two input strings
 **/
-int calcMinutesFromTimes(const string &earlier, const string &later) {
-  int h1 = stoi(earlier.substr(0, 2));
-  int m1 = stoi(earlier.substr(3, 2));
-  int h2 = stoi(later.substr(0, 2));
-  int m2 = stoi(later.substr(3, 2));
+int calcMinutesFromTimes(const string& earlier, const string& later)
+{
+  int h1  = stoi(earlier.substr(0, 2));
+  int m1  = stoi(earlier.substr(3, 2));
+  int h2  = stoi(later.substr(0, 2));
+  int m2  = stoi(later.substr(3, 2));
   int dif = (h2 - h1) * 60 + (m2 - m1);
   return (dif < 0) ? dif + (24 * 60) : dif;
 }
@@ -72,12 +81,14 @@ Takes a map of the following pattern: hour as key and minutes as value
 and iterates over it, printing the associations in order.
 @param hours: container holding hour-to-minutes pairs
 **/
-void printHours(const map<int, int> &hours) {
+void printHours(const map<int, int>& hours)
+{
   cout << "\n"
        << setw(10) << "day"
        << "|hours\n"
        << "--------------------------\n";
-  for (const auto &day : hours) {
+  for (const auto& day : hours)
+  {
     cout << setw(11) << day.first << day.second / 60 << ":" << setfill('0')
          << setw(2) << right << day.second % 60 << "\n"
          << left << setfill(' ');
@@ -91,27 +102,36 @@ generate an output for the clock-in and clock-out times of each day
 as well as the total hours worked each day.
 @param y: The year from user input
 @param m: The month from user input
-@param pp: The pay cycle that the user is interested in (false = 1-15, true =
-16-end)
+@param pp: The pay cycle that the user is interested in (false = 1-15, true = 16-end)
 **/
-void parseFile(const string &y, const string &m, const bool &pp) {
+void parseFile(const string& y, const string& m, const bool& pp)
+{
   map<int, int> hours; // key is day, value is minutes
-  string line;
-  string file{PATH + "/" + y + "/" + m + ".txt"};
+
+  // check env override for hours dir
+  std::string hours_dir = HT_OUT_DIR;
+  char*       temp_hours_dir;
+  if ((temp_hours_dir = getenv("HT_OUT_DIR")))
+    hours_dir = temp_hours_dir;
+
+  string   file{hours_dir + "/" + y + "/" + m + ".txt"};
   ifstream data(file);
-  if (data.is_open()) {
+  if (data.is_open())
+  {
     cout << "\n";
-    char current{
-        'i'}; // whether looking for clock in time (i) or clock out time (o)
-    char last{'*'}; // track whether last line was clock in or clock out
+    char   current{'i'}; // clock in time (i) or clock out time (o)
+    char   last{'*'}; // track whether last line was clock in or clock out
     string clockin;
     string clockout;
     cout << setfill(' ') << setw(10) << left << "day" << setw(15) << "|clock-in"
          << "|clock-out\n"
          << "--------------------------------------------\n";
-    while (getline(data, line)) {
+    string line;
+    while (getline(data, line))
+    {
       int ptr{0};
-      if (line[ptr++] == current) {
+      if (line[ptr++] == current)
+      {
         int day{0};
         while (line[ptr++] != '#')
           day++; // length of day at this point
@@ -122,11 +142,14 @@ void parseFile(const string &y, const string &m, const bool &pp) {
         if (!PRINTALL && ((!pp && day > MID) || (pp && day <= MID)))
           continue;
         string hourAndMin = line.substr(ptr, 5);
-        if (current == 'i') {
+        if (current == 'i')
+        {
           current = 'o';
           clockin = hourAndMin;
-        } else {
-          current = 'i';
+        }
+        else
+        {
+          current  = 'i';
           clockout = hourAndMin;
           cout << setw(11) << left << day << setw(15) << clockin << clockout
                << "\n";
@@ -136,7 +159,8 @@ void parseFile(const string &y, const string &m, const bool &pp) {
     }
     data.close();
     printHours(hours);
-  } else
+  }
+  else
     cout << "Unable to open file";
 }
 
@@ -146,9 +170,11 @@ Checks if the input follows the format of MM/YY
 @param month: string to hold value for month
 @param year: string to hold value for year
 **/
-bool checkValidMonthAndYear(const string &input, string &month, string &year) {
+bool checkValidMonthAndYear(const string& input, string& month, string& year)
+{
   int ind{0};
-  if (input.length() != 5 || input[2] != '/') {
+  if (input.length() != 5 || input[2] != '/')
+  {
     cout << "Bad month and year entered, please reenter.\n";
     return false;
   }
@@ -156,9 +182,10 @@ bool checkValidMonthAndYear(const string &input, string &month, string &year) {
     ind++;
 
   month = input.substr(ind - 2, 2);
-  year = input.substr(ind + 1, 2);
+  year  = input.substr(ind + 1, 2);
   if (stoi(year) >= 0 && stoi(year) < 100 && stoi(month) > 0 &&
-      stoi(month) < 13) {
+      stoi(month) < 13)
+  {
     cout << "Year is: " << year << " | "
          << "Month is: " << month << "\n";
     return true;
@@ -174,12 +201,14 @@ to build the path for the text file containing the data of interest
 @param month: string to hold value for month
 @param year: string to hold value for year
 **/
-void readMonthAndYear(string &month, string &year) {
-  while (true) {
+void readMonthAndYear(string& month, string& year)
+{
+  while (true)
+  {
     string input{};
     cout << "Please enter the month and year (as MM/YY): ";
     cin >> input;
-    if(checkValidMonthAndYear(input, month, year))
+    if (checkValidMonthAndYear(input, month, year))
       return;
   }
 }
@@ -188,12 +217,15 @@ void readMonthAndYear(string &month, string &year) {
 Requests input from the user to flag which pay cycle they are interested in
 @param p: flag to mark which pay cycle to generate output for
 **/
-void readPayPeriod(int &p) {
+void readPayPeriod(int& p)
+{
   cout << "Please enter the pay cycle (1 for 1-15, 2 16-end, or 3 for both): ";
-  while (true) {
+  while (true)
+  {
     cin >> p;
     p--; // to use as a bool later (1-->0, 2-->1)
-    if (p == 0 || p == 1) {
+    if (p == 0 || p == 1)
+    {
       return;
     }
     else if (p == 2)
